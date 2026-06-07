@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes</title>
+</head>
+<body>
+<h1>Clientes:</h1>
+<ul>
+    {% for cliente in clientes %}
+    <li><strong>{{ cliente.nome }}</strong> ({{ cliente.endereco.rua }}, {{ cliente.endereco.cidade }})
+        <ul>
+            {% for pedido in cliente.pedidos.all %}
+            <li>Pedido #{{ pedido.id }} ({{ pedido.data }}):
+                <ul>
+                    {% for item in pedido.itens.all %}
+                    <li>{{ item.produto.nome }} &times; {{ item.quantidade }} &mdash; &euro;{{ item.produto.preco }}</li>
+                    {% empty %}
+                    <li><em>Sem produtos</em></li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% empty %}
+            <li><em>Sem pedidos</em></li>
+            {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
+</ul>
+</body>
+</html>
